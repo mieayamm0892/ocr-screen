@@ -1,0 +1,11 @@
+#!/bin/bash
+
+grim -g "$(slurp)" /tmp/ocr.png
+
+magick /tmp/ocr.png \
+  -colorspace Gray \
+  -resize 200% \
+  -sharpen 0x1 \
+  /tmp/ocr-pre.png
+
+tesseract /tmp/ocr-pre.png stdout -l eng+ind | wl-copy
