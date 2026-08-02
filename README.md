@@ -37,7 +37,7 @@ sudo pacman -S grim slurp tesseract imagemagick wl-clipboard
 Clone the repository:
 
 ```bash
-git clone https://github.com/mieayamm0892/ocr-screen.git
+git clone https://github.com/skibidigyat223/ocr-screen.git
 cd ocr-screen
 ```
 
