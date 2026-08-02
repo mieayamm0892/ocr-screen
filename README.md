@@ -142,4 +142,3 @@ ImageMagick
 - No focus stealing.
 - Fullscreen-friendly.
 - Default OCR languages: English (`eng`) and Indonesian (`ind`).
-````
