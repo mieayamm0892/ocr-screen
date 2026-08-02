@@ -7,7 +7,7 @@ Simple OCR screenshot tool for Wayland/Hyprland.
 - Select screen area with slurp
 - Screenshot using grim
 - OCR using Tesseract
-- Copy text directly to clipboard
+- Copy extracted text directly to clipboard
 
 ## Dependencies
 
