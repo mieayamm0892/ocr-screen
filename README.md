@@ -1,38 +1,47 @@
 
 # ocr-screen
 
-Simple OCR screenshot tool for Wayland/Hyprland.
+A lightweight OCR screenshot utility for Wayland compositors.
 
 `ocr-screen` lets you select any area of your screen, preprocess the image for better OCR accuracy, extract text using Tesseract, and automatically copy the result to the Wayland clipboard.
 
-Unlike many GUI OCR applications, it does **not** open an additional window or steal focus, making it ideal for fullscreen applications and fast workflows.
+Unlike many GUI OCR applications, it does **not** open an additional window or steal focus, making it ideal for fullscreen applications and uninterrupted workflows.
 
 ## Features
 
 - Select a screen area using `slurp`
 - Capture screenshots with `grim`
 - Preprocess images using ImageMagick
-- Extract text with Tesseract OCR
+- Extract text using Tesseract OCR
 - Automatically copy extracted text to the Wayland clipboard
-- Lightweight and script-based
+- Lightweight Bash script
+- Fast startup
 - Works well with fullscreen applications
 
-## Dependencies
+## Why?
+
+Most OCR applications open an additional window or steal focus after capturing the screen.
+
+`ocr-screen` keeps your workflow uninterrupted by copying the extracted text directly to the clipboard without opening any extra windows.
+
+## Requirements
+
+- Wayland
+- `grim`
+- `slurp`
+- `imagemagick`
+- `tesseract`
+- `wl-clipboard`
+
+## Installation
 
 ### Arch-based distributions
 
+Install the required packages:
+
 ```bash
-sudo pacman -S grim slurp tesseract imagemagick wl-clipboard
+sudo pacman -S grim slurp imagemagick tesseract wl-clipboard
 ```
-
-> **Note**
->
-> The default OCR languages are English (`eng`) and Indonesian (`ind`).
-> Install additional Tesseract language packs if needed.
-
----
-
-## Installation
 
 Clone the repository:
 
@@ -47,19 +56,22 @@ Make the script executable:
 chmod +x ocr-screen
 ```
 
-Install system-wide:
+Install it system-wide:
 
 ```bash
 sudo install -Dm755 ocr-screen /usr/local/bin/ocr-screen
 ```
 
-Verify the installation:
+Run:
 
 ```bash
 ocr-screen
 ```
 
----
+> **Note**
+>
+> The default OCR languages are English (`eng`) and Indonesian (`ind`).
+> Install additional Tesseract language packs if needed.
 
 ## Hyprland Keybind
 
@@ -85,8 +97,6 @@ hyprctl reload
 > - `~/.config/hypr/UserConfigs/UserKeybinds.conf`
 > - Any custom configuration file included by your Hyprland configuration.
 
----
-
 ## Usage
 
 1. Press your configured keybind (e.g. **Alt + A**).
@@ -94,44 +104,42 @@ hyprctl reload
 3. Wait for OCR processing to finish.
 4. Paste the copied text anywhere using **Ctrl + V**.
 
----
-
 ## How It Works
 
-```
-slurp
-   │
-   ▼
-grim
-   │
-   ▼
+```text
+Select Area
+     │
+     ▼
+   slurp
+     │
+     ▼
+    grim
+     │
+     ▼
 ImageMagick
-   │
-   ▼
-Tesseract
-   │
-   ▼
-wl-copy
+     │
+     ▼
+ Tesseract
+     │
+     ▼
+  wl-copy
+     │
+     ▼
+ Clipboard
 ```
 
 1. Select a region with **slurp**.
 2. Capture the selected region using **grim**.
-3. Preprocess the image with **ImageMagick**.
+3. Preprocess the image using **ImageMagick**.
 4. Extract text using **Tesseract OCR**.
 5. Copy the extracted text directly to the Wayland clipboard.
-
----
 
 ## Notes
 
 - Wayland only.
-- Designed for Hyprland but should work with other Wayland compositors that support `grim` and `slurp`.
-- No additional GUI is opened during OCR.
-- Does not interrupt fullscreen applications.
-
----
-
-## License
-
-MIT License.
+- Designed for Hyprland but compatible with other Wayland compositors that support `grim` and `slurp`.
+- No additional GUI windows.
+- No focus stealing.
+- Fullscreen-friendly.
+- Default OCR languages: English (`eng`) and Indonesian (`ind`).
 ````
