@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 grim -g "$(slurp)" /tmp/ocr.png
 
 magick /tmp/ocr.png \
@@ -8,4 +10,15 @@ magick /tmp/ocr.png \
   -sharpen 0x1 \
   /tmp/ocr-pre.png
 
-tesseract /tmp/ocr-pre.png stdout -l eng+ind | wl-copy
+text=$(tesseract /tmp/ocr-pre.png stdout -l eng+ind)
+
+echo -n "$text" | wl-copy
+
+if [[ -n "$text" ]]; then
+    preview=$(echo "$text" | tr '\n' ' ' | cut -c1-80)
+    notify-send "OCR Complete" "$preview"
+else
+    notify-send "OCR Failed" "No text detected."
+fi
+
+rm -f /tmp/ocr.png /tmp/ocr-pre.png
