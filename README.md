@@ -8,7 +8,7 @@ Unlike many GUI OCR applications, it does **not** open additional windows or ste
 
 ---
 
-## 🎥 Demo
+## Demo
 <video src="https://github.com/user-attachments/assets/564855c9-3fd7-4af2-a4a9-7d2662fbfb19" controls width="800"></video>
 ---
 
