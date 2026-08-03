@@ -2,15 +2,23 @@
 
 set -e
 
-grim -g "$(slurp)" /tmp/ocr.png
+area=$(slurp)
+
+if [[ -z "$area" ]]; then
+    notify-send "OCR Cancelled" "No area selected."
+    exit 1
+fi
+
+grim -g "$area" /tmp/ocr.png
 
 magick /tmp/ocr.png \
   -colorspace Gray \
-  -resize 200% \
+  -resize 300% \
+  -contrast-stretch 0x10% \
   -sharpen 0x1 \
   /tmp/ocr-pre.png
 
-text=$(tesseract /tmp/ocr-pre.png stdout -l eng+ind)
+text=$(tesseract /tmp/ocr-pre.png stdout -l eng+ind --psm 6)
 
 echo -n "$text" | wl-copy
 

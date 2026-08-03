@@ -10,10 +10,6 @@ Unlike many GUI OCR applications, it does **not** open additional windows or ste
 
 ## 🎥 Demo
 
-> Replace the placeholder below with your uploaded GitHub video.
-
-https://github.com/user-attachments/assets/YOUR_VIDEO_ID
-
 ---
 
 ## Features
