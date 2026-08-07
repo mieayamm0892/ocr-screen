@@ -1,32 +1,28 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -e
+IMG="/tmp/vn-ocr.png"
+PRE="/tmp/vn-ocr-pre.png"
 
-area=$(slurp)
+# pilih area
+AREA=$(slurp)
 
-if [[ -z "$area" ]]; then
-    notify-send "OCR Cancelled" "No area selected."
+if [ -z "$AREA" ]; then
     exit 1
 fi
 
-grim -g "$area" /tmp/ocr.png
+# screenshot
+grim -g "$AREA" "$IMG"
 
-magick /tmp/ocr.png \
-  -colorspace Gray \
-  -resize 300% \
-  -contrast-stretch 0x10% \
-  -sharpen 0x1 \
-  /tmp/ocr-pre.png
+# preprocessing
+magick "$IMG" \
+    -resize 400% \
+    -colorspace Gray \
+    -sharpen 0x1 \
+    "$PRE"
 
-text=$(tesseract /tmp/ocr-pre.png stdout -l eng+ind --psm 6)
+# OCR sementara pakai tesseract
+TEXT=$(tesseract "$PRE" stdout --psm 6 -l eng)
 
-echo -n "$text" | wl-copy
+echo "$TEXT" | wl-copy
 
-if [[ -n "$text" ]]; then
-    preview=$(echo "$text" | tr '\n' ' ' | cut -c1-80)
-    notify-send "OCR Complete" "$preview"
-else
-    notify-send "OCR Failed" "No text detected."
-fi
-
-rm -f /tmp/ocr.png /tmp/ocr-pre.png
+notify-send "VN OCR" "$TEXT"
